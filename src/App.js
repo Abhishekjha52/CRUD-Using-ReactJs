@@ -32,10 +32,11 @@ const App = () => {
   };
 
   const updateUser = () => {
-    const updatedUser = {...users[activeInd], ...formData};
-    const newUsers = [...users];
-    newUsers[activeInd] = updatedUser;
-    setUsers(newUsers);
+    setUsers((prevUsers) => {
+      const updatedUsers = [...prevUsers];
+      updatedUsers[activeInd] = { ...updatedUsers[activeInd], ...formData };
+      return updatedUsers;
+    });
     setActiveInd(null);
   };
 
