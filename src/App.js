@@ -56,6 +56,14 @@ const App = () => {
     }
   };
 
+  const onChange = (e) => {
+    const { name, value } = e.target;
+    setFormData({
+        ...formData,
+        [name]: value
+    });
+  }
+
   return (
     <div>
       <center>
@@ -67,13 +75,7 @@ const App = () => {
             <Form
               onSubmit={addUser}
               formData={formData}
-              setFormData={(e) => {
-                const { name, value } = e.target;
-                setFormData((prevState) => ({
-                  ...prevState,
-                  [name]: value,
-                }));
-              }}
+              onChange={onChange}
               activeInd={activeInd}
             />
           </div>
