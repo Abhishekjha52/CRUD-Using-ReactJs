@@ -1,6 +1,6 @@
 import React from "react";
 
-const Form = ({ onSubmit, formData, setFormData, edit }) => {
+const Form = ({ onSubmit, formData, setFormData, activeInd}) => {
   return (
     <form onSubmit={onSubmit}>
       <div className="form-group">
@@ -12,6 +12,7 @@ const Form = ({ onSubmit, formData, setFormData, edit }) => {
           value={formData.name}
           placeholder="Enter Name"
           onChange={setFormData}
+          required
         />
       </div>
       <br />
@@ -21,9 +22,10 @@ const Form = ({ onSubmit, formData, setFormData, edit }) => {
           type="number"
           name="age"
           className="form-control form-control-lg"
-          value={formData.age}
+          value={formData.age!==0 ? formData.age : ""}
           placeholder="Enter Age"
           onChange={setFormData}
+          required
         />
       </div>
       <br />
@@ -36,11 +38,12 @@ const Form = ({ onSubmit, formData, setFormData, edit }) => {
           value={formData.city}
           placeholder="Enter City"
           onChange={setFormData}
+          required
         />
       </div>
       <br />
       <button className="btn btn-success btn-lg btn-block">
-        {edit ? "UPDATE" : "ADD"}
+        {activeInd!=null ? "UPDATE" : "ADD"}
       </button>
     </form>
   );
