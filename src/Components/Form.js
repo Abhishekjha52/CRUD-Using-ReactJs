@@ -1,6 +1,6 @@
 import React from "react";
 
-const Form = ({ onSubmit, formData, setFormData, activeInd}) => {
+const Form = ({ onSubmit, formData, onChange, activeInd}) => {
   return (
     <form onSubmit={onSubmit}>
       <div className="form-group">
@@ -11,7 +11,7 @@ const Form = ({ onSubmit, formData, setFormData, activeInd}) => {
           className="form-control form-control-lg"
           value={formData.name}
           placeholder="Enter Name"
-          onChange={setFormData}
+          onChange={onChange}
           required
         />
       </div>
@@ -24,7 +24,7 @@ const Form = ({ onSubmit, formData, setFormData, activeInd}) => {
           className="form-control form-control-lg"
           value={formData.age!==0 ? formData.age : ""}
           placeholder="Enter Age"
-          onChange={setFormData}
+          onChange={onChange}
           required
         />
       </div>
@@ -37,7 +37,7 @@ const Form = ({ onSubmit, formData, setFormData, activeInd}) => {
           className="form-control form-control-lg"
           value={formData.city}
           placeholder="Enter City"
-          onChange={setFormData}
+          onChange={onChange}
           required
         />
       </div>
