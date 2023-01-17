@@ -2,53 +2,56 @@ import "./App.css";
 import { useState } from "react";
 import Form from "./Components/Form";
 import UserList from "./Components/UserList";
+import CreateUserObject from "./Components/CreateUserObject";
 import { v4 as uuidv4 } from "uuid";
 
 const App = () => {
   const [formData, setFormData] = useState({
     name: "",
-    age: "",
+    age: 0,
     city: "",
   });
 
   const [users, setUsers] = useState([]);
-  const [edit, setEdit] = useState(false); //to track the edit option..if edit is true then add changes to update
   const [activeInd, setActiveInd] = useState(null);
 
   const addUser = (e) => {
     e.preventDefault();
-    const id = uuidv4(); // using uuid to generate unique ids
-    const user = {
-      id,
-      name: formData.name,
-      age: formData.age,
-      city: formData.city,
-    };
-
-    if (edit) {
-      //update user
-      Object.assign(users[activeInd], user);
-      setUsers([...users]);
-      setEdit(false);
-      setActiveInd(null);
-    } else {
-      //add user
-      setUsers([...users, user]);
+    if(activeInd!=null){
+      updateUser();
     }
-    setFormData({ name: "", age: "", city: "" });
+    else{
+      createUser();
+    }
+    resetFormData();
+  };
+
+  const createUser = () => {
+    const user = CreateUserObject(uuidv4(), formData);
+    setUsers([...users, user]);
+  };
+
+  const updateUser = () => {
+    const updatedUser = {...users[activeInd], ...formData};
+    const newUsers = [...users];
+    newUsers[activeInd] = updatedUser;
+    setUsers(newUsers);
+    setActiveInd(null);
+  };
+
+  const resetFormData = () => {
+    setFormData({ name: "", age: 0, city: "" });
   };
 
   const handleEdit = (index) => {
     const user = users[index];
     setFormData({ name: user.name, age: user.age, city: user.city });
-    setEdit(true);
     setActiveInd(index);
   };
 
   const handleDelete = (id) => {
     if (window.confirm("Are you sure you want to delete?")) {
       const newUsers = users.filter((user) => user.id !== id);
-
       setUsers([...newUsers]);
     }
   };
@@ -71,7 +74,7 @@ const App = () => {
                   [name]: value,
                 }));
               }}
-              edit={edit}
+              activeInd={activeInd}
             />
           </div>
         </div>
